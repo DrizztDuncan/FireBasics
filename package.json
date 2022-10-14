@@ -1,0 +1,23 @@
+{
+  "dependencies": {
+    "firebase": "^9.12.1",
+    "serve": "^14.0.1"
+  },
+  "name": "firebasics",
+  "description": "Firebase",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DrizztDuncan/FireBasics.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DrizztDuncan/FireBasics/issues"
+  },
+  "homepage": "https://github.com/DrizztDuncan/FireBasics#readme"
+}
