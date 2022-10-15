@@ -16,7 +16,17 @@ const userDetails = document.getElementById("userDetails");
 const provider = new firebase.auth.GoogleAuthProvider();
 
 // Sign in event handlers
-signInBtn.onclick = () => auth.signInWithPopup(provider);
+signInBtn.addEventListener("click", () =>
+  firebase
+    .auth()
+    .signInWithPopup(provider)
+    .then(function (result) {
+      console.log("result", result);
+    })
+    .catch(function (error) {
+      console.error(error);
+    })
+);
 
 signOutBtn.onclick = () => auth.signOut();
 // Stream of changes
