@@ -43,3 +43,46 @@ auth.onAuthStateChanged((user) => {
     userDetails.innerHTML = "";
   }
 });
+
+///// Firestore /////
+
+const db = firebase.firestore();
+
+const createThing = document.getElementById("createThing");
+const thingsList = document.getElementById("thingsList");
+
+let thingsRef; // Reference to a database location
+let unsubscribe; // Turn off realtime stream
+
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    thingsRef = db.collection("things");
+
+    createThing.onclick = () => {
+      const { serverTimestamp } = firebase.firestore.FieldValue;
+
+      // Creates a new document
+      thingsRef.add({
+        uid: user.uid, //User has-many things
+        name: faker.commerce.productName(),
+        createdAt: serverTimestamp(), //Date obj is not always consistent on every machine, so use Firebase Firestore field value.
+      });
+    };
+
+    unsubscribe = thingsRef
+      .where("uid", "==", user.uid) //Query
+
+      .orderBy("createdAt") //compound Query
+
+      //callback funtion that runs when data changes
+      .onSnapshot((querySnapshot) => {
+        const items = querySnapshot.docs.map((doc) => {
+          return `<li>${doc.data().name}</li>`;
+        });
+
+        thingsList.innerHTML = items.join("");
+      });
+  } else {
+    unsubscribe && unsubscribe(); //unsubsribe when user not log in
+  }
+});
